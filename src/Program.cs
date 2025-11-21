@@ -34,7 +34,7 @@ Argument<string> addressArgument = new("address")
 };
 
 
-var root = new RootCommand("A faster but not necessarily better tracert.");
+var root = new RootCommand("A faster but not necessarily better trace util.");
 root.Options.Add(dnsOption);
 root.Options.Add(hopsOption);
 root.Options.Add(timeoutOption);
@@ -64,7 +64,10 @@ static void Trace(string address, int timeout, int maxHops, bool resolveHostname
 {
     var (hostname, ipAddress) = ResolveHostname(address);
 
-    Console.WriteLine($"Tracing route to {hostname + " "}[{ipAddress}]");
+    var ipAddressString = $"[{ipAddress}]";
+    var hostString = hostname is not null ? $"{hostname} {ipAddressString}" : ipAddressString;
+
+    Console.WriteLine("Tracing route to " + hostString);
     Console.WriteLine($"over a maximum of {maxHops} hops:");
     Console.WriteLine();
 
@@ -76,7 +79,7 @@ static void Trace(string address, int timeout, int maxHops, bool resolveHostname
     var ping = new Ping();
     var opt = new PingOptions(ttl: 1, dontFragment: false);
 
-    
+
     while (true)
     {
         stopwatch.Restart();

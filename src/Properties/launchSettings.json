@@ -1,7 +1,8 @@
 {
   "profiles": {
     "trace": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": ""
     }
   }
 }
